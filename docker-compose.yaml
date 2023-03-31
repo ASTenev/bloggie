@@ -1,0 +1,37 @@
+version: "20.10"
+services:
+  app:
+    container_name: bloggieApp
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DB_HOST: bloggieDB
+      DB_DATABASE: bloggie
+      DB_USERNAME: root
+      DB_PASSWORD: Parolkata
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    networks:
+      - bloggie
+
+  db:
+    container_name: bloggieDB
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: bloggie
+      MYSQL_ROOT_PASSWORD: Parolkata
+    volumes:
+      - .dbdata:/var/lib/mysql
+    ports:
+      - 33066:3306
+    networks:
+      - bloggie
+
+networks:
+  bloggie:
