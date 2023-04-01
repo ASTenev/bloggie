@@ -6,15 +6,17 @@
                     <!-- Create Post form-->
                     <div class="card mb-4">
                         <div class="card-header"><b class="font-weight-bold">
-                                CREATE POST
+                                EDIT POST
                             </b></div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
+                            <form method="PUT" action="{{ route('posts.update', $post->id) }}"
+                                enctype="multipart/form-data">
                                 @csrf
+                                @method('PUT')
                                 <div class="mb-3">
                                     <label for="title" class="form-label">Title</label>
                                     <input type="text" class="form-control @error('title') is-invalid @enderror"
-                                        id="title" name="title" required value="{{ old('title') }}">
+                                        id="title" name="title" required value="{{ old('title', $post->title) }}">
                                     @error('title')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -24,7 +26,7 @@
 
                                 <div class="mb-3">
                                     <label for="content" class="form-label">Content</label>
-                                    <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows=13 required>{{ old('content') }}</textarea>
+                                    <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows=13 required>{{ old('content', $post->content) }}</textarea>
                                     @error('content')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -42,8 +44,9 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary">Update</button>
                             </form>
+
                         </div>
                     </div>
                 </div>

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Services\PostService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,6 +23,12 @@ class PostController extends Controller
         return view('posts.index', compact('posts'));
     }
 
+    public function userPosts()
+    {
+        $posts = $this->postService->UserPosts();
+        return view('posts.index', compact('posts'));
+    }
+
     public function show($id)
     {
         $post = $this->postService->show($id);
@@ -39,19 +44,17 @@ class PostController extends Controller
     {
         $user = Auth::user();
 
-        // ensure the authenticated user is the author of the post
-        $request->merge(['user_id' => $user->id]);
-
-        $this->authorize('create', Post::class);
-
         $data = $request->validated();
+        $image = $request->file('image');
+        unset($data['image']);
+        $data['user_id'] = $user->id;
+        $post = $this->postService->store($data);
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->storeAs('public/images', $data['id'] . '.' . $request->file('image')->getClientOriginalExtension());
+            $imagePath = $image->storeAs('images', $post->id . '.' . $request->file('image')->getClientOriginalExtension());
             $data['image'] = $imagePath;
+            $this->postService->update($post, $data);
         }
-
-        $post = $this->postService->store($data);
 
         return redirect()->route('posts.show', $post->id);
     }
@@ -60,7 +63,7 @@ class PostController extends Controller
     {
         $post = $this->postService->show($id);
 
-        $this->authorize('update', $post);
+        $this->authorize('edit', $post);
 
         return view('posts.edit', compact('post'));
     }
@@ -74,7 +77,7 @@ class PostController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->storeAs('public/images', $data['id'] . '.' . $request->file('image')->getClientOriginalExtension());
+            $imagePath = $request->file('image')->storeAs('images', $data['id'] . '.' . $request->file('image')->getClientOriginalExtension());
             $data['image'] = $imagePath;
         }
 

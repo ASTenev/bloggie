@@ -3,7 +3,7 @@
     <header class="py-5 bg-light border-bottom mb-4">
         <div class="container">
             <div class="text-center my-5">
-                <h1 class="fw-bolder">Welcome to My Blog!</h1>
+                <h1 class="fw-bolder">Welcome to Bloggie!</h1>
                 <p class="lead mb-0">Explore, inspire, and share your passion with the world.</p>
             </div>
         </div>
@@ -19,7 +19,7 @@
                             <div class="card mb-4">
                                 <a href="/posts/{{ $post->id }}">
                                     @if($post->image)
-                                        @php $image = url('/images/posts/' . $post->image) @endphp
+                                        @php $image = url('storage/' . $post->image) @endphp
                                     @else
                                         @php $image = "https://dummyimage.com/900x400/ced4da/6c757d.jpg" @endphp
                                     @endif

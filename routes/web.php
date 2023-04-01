@@ -17,13 +17,13 @@ use App\Http\Controllers\ProfileController;
 
 Route::get('/', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('auth');
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store')->middleware('auth');
-Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
-Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit')->middleware('auth');
-Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update')->middleware('auth');
-Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy')->middleware('auth');
-
+Route::get('/posts/user', [PostController::class, 'userPosts'])->name('posts.user')->middleware('auth');
+Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('auth');
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show')->where('post', '[0-9]+');
+Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit')->where('post', '[0-9]+')->middleware('auth');
+Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update')->where('post', '[0-9]+')->middleware('auth');
+Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy')->where('post', '[0-9]+')->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

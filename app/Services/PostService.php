@@ -15,6 +15,21 @@ class PostService
         $this->postRepository = $postRepository;
     }
 
+    public function index(): Collection
+    {
+        return $this->postRepository->getAll();
+    }
+
+    public function userPosts(): Collection
+    {
+        return $this->postRepository->getUserPosts();
+    }
+
+    public function show(int $id): ?Post
+    {
+        return $this->postRepository->getById($id);
+    }
+
     public function store(array $data): Post
     {
         return $this->postRepository->create($data);
@@ -28,15 +43,5 @@ class PostService
     public function destroy(Post $post): void
     {
         $this->postRepository->delete($post);
-    }
-
-    public function show(int $id): ?Post
-    {
-        return $this->postRepository->getById($id);
-    }
-
-    public function index(): Collection
-    {
-        return $this->postRepository->getAll();
     }
 }
