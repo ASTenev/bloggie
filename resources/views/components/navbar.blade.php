@@ -12,20 +12,7 @@
                     <li class="nav-item">
                         <a class="nav-link text-light" href="/users/{{ auth()->user()->id }}/posts">My posts</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="/profile/{{ auth()->user()->id }}/posts">Profile</a>
-                    </li>
-                     <li class="nav-item">
-                     <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </li>
+                    <a href="/logout" class="btn btn-outline-light rounded-0 me-2">Logout</a>
                 @else
                     <li class="nav-item">
                         <a href="/login" class="btn btn-outline-light rounded-0 me-2">Log In</a>
