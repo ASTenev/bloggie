@@ -1,5 +1,20 @@
 <x-app-layout>
     <!-- Page header with logo and tagline-->
+    <div id="flash-message"></div>
+    @if(session('success'))
+    <script>
+        setTimeout(function(){
+            var message = "{{ session('success') }}";
+            var flashMessage = document.getElementById('flash-message');
+            flashMessage.innerHTML = message;
+            flashMessage.classList.add('alert', 'text-white', 'position-fixed', 'top-0', 'start-50', 'translate-middle-x', 'p-3', 'rounded');
+            setTimeout(function(){
+                flashMessage.parentNode.removeChild(flashMessage);
+            }, 2000);
+        }, 100);
+    </script>
+@endif
+
     <header class="py-5 bg-light border-bottom mb-4">
         <div class="container">
             <div class="text-center my-5">
@@ -13,7 +28,6 @@
         <div class="row justify-content-center">
             <div class="col-md-9 col-lg-7">
                 <div class="row">
-
                     @if (count($posts) > 0)
                         @foreach ($posts as $post)
                             <div class="col-md-6 mx-auto mb-4" style="width: 400px;">
@@ -40,6 +54,9 @@
                                 </div>
                             </div>
                         @endforeach
+                        <div class="d-flex justify-content-center">
+    {{ $posts->links('vendor.pagination.bootstrap-4') }}
+</div>
                     @else
                         <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
                             <h3 class="text-center" style="width: 100%;">NO POSTS</h3>

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
@@ -47,6 +49,13 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+
+        $posts = DB::table('posts')->where('user_id', $user->id)->get();
+
+        // Delete the posts and their images
+        foreach ($posts as $post) {
+            Storage::delete('public/images/' . $post->image); // Delete the post's image
+        }
 
         Auth::logout();
 

@@ -25,16 +25,14 @@ Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.e
 Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update')->where('post', '[0-9]+')->middleware('auth');
 Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy')->where('post', '[0-9]+')->middleware('auth');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::view('/about', 'about')->name('about');
+Route::view('/contact', 'contact')->name('contact');
 
 
 require __DIR__.'/auth.php';

@@ -3,9 +3,10 @@
 namespace App\Services;
 
 use App\Models\Post;
-use App\Repositories\PostRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
+use App\Repositories\PostRepositoryInterface;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class PostService
 {
@@ -16,12 +17,12 @@ class PostService
         $this->postRepository = $postRepository;
     }
 
-    public function index(): Collection
+    public function index(): LengthAwarePaginator
     {
         return $this->postRepository->getAll();
     }
 
-    public function userPosts(): Collection
+    public function userPosts(): LengthAwarePaginator
     {
         return $this->postRepository->getByField('user_id', Auth::id());
     }

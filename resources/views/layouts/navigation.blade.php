@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md bg-primary navbar-dark shadow" style="border-bottom: 3px solid white;">
+<nav class="navbar navbar-expand-md bg-primary navbar-dark shadow" style="border-bottom: 3px solid white;height:60px">
     <div class="container">
         <a class="navbar-brand" href="/">Bloggie</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

@@ -50,21 +50,4 @@
             </div>
         </div>
     </div>
-    <script>
-        const password = document.querySelector("#password");
-        const confirm_password = document.querySelector("#confirm-password");
-        const password_match = document.querySelector("#password-match");
-
-        function validatePassword() {
-            if (password.value !== confirm_password.value) {
-                confirm_password.setCustomValidity("Passwords do not match");
-                password_match.textContent = "Passwords do not match";
-            } else {
-                confirm_password.setCustomValidity("");
-                password_match.textContent = "";
-            }
-        }
-        password.addEventListener("change", validatePassword);
-        confirm_password.addEventListener("keyup", validatePassword);
-    </script>
 </x-app-layout>
