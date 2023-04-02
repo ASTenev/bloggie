@@ -9,7 +9,7 @@
                                 EDIT POST
                             </b></div>
                         <div class="card-body">
-                            <form method="PUT" action="{{ route('posts.update', $post->id) }}"
+                            <form method="POST" action="{{ route('posts.update', $post->id) }}"
                                 enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
@@ -35,6 +35,11 @@
                                 </div>
 
                                 <div class="mb-3">
+                                    @if ($post->image)
+                                        <img src="{{ asset('storage/images/' . $post->image) }}" alt="Current image"
+                                            style="max-width:800px;max-height:200px">
+                                        <input type='hidden' name="old_image" value="{{ $post->image }}">
+                                    @endif
                                     <label for="image" class="form-label">Image</label>
                                     <input type="file" class="form-control @error('image') is-invalid @enderror"
                                         id="image" name="image">

@@ -3,14 +3,15 @@
 namespace App\Services;
 
 use App\Models\Post;
-use App\Repositories\PostRepository;
+use App\Repositories\PostRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
 
 class PostService
 {
     private $postRepository;
 
-    public function __construct(PostRepository $postRepository)
+    public function __construct(PostRepositoryInterface $postRepository)
     {
         $this->postRepository = $postRepository;
     }
@@ -22,12 +23,12 @@ class PostService
 
     public function userPosts(): Collection
     {
-        return $this->postRepository->getUserPosts();
+        return $this->postRepository->getByField('user_id', Auth::id());
     }
 
     public function show(int $id): ?Post
     {
-        return $this->postRepository->getById($id);
+        return $this->postRepository->getByField('id', $id)->first();
     }
 
     public function store(array $data): Post

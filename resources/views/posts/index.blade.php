@@ -1,5 +1,5 @@
 <x-app-layout>
-<!-- Page header with logo and tagline-->
+    <!-- Page header with logo and tagline-->
     <header class="py-5 bg-light border-bottom mb-4">
         <div class="container">
             <div class="text-center my-5">
@@ -13,37 +13,41 @@
         <div class="row justify-content-center">
             <div class="col-md-9 col-lg-7">
                 <div class="row">
-                @if(count($posts) > 0)
-                    @foreach($posts as $post)
-                        <div class="col-md-6 mx-auto" style="width: 400px;">
-                            <div class="card mb-4">
-                                <a href="/posts/{{ $post->id }}">
-                                    @if($post->image)
-                                        @php $image = url('storage/' . $post->image) @endphp
-                                    @else
-                                        @php $image = "https://dummyimage.com/900x400/ced4da/6c757d.jpg" @endphp
-                                    @endif
-                                    <div class="image-container" style="width: auto;">
-                                        <img src="{{ $image }}" alt="Post image" style="width: 100%;">
+
+                    @if (count($posts) > 0)
+                        @foreach ($posts as $post)
+                            <div class="col-md-6 mx-auto mb-4" style="width: 400px;">
+                                <div class="card" style="min-height:100%;"">
+                                    <a href="/posts/{{ $post->id }}">
+                                        @if ($post->image)
+                                            @php $image = url('storage/images/' . $post->image) @endphp
+                                        @else
+                                            @php $image = url('storage/images/default.jpg') @endphp
+                                        @endif
+                                        <div class="image-container" style="width: auto;">
+                                            <img src="{{ $image }}" alt="Post image" class="mx-auto d-block"
+                                                style="max-height: 300px; max-width: 100%; object-fit: cover;">
+                                        </div>
+                                    </a>
+                                    <div class="card-body">
+                                        <div class="small text-muted">Posted on
+                                            {{ $post->created_at->format('F j, Y') }} by {{ $post->user->name }}</div>
+                                        <h2 class="card-title h4">{{ $post->title }}</h2>
+                                        <p class="card-text" style="text-indent: 1.5em; text-align: justify;">
+                                            {{ Str::limit($post->content, 100) }} ...</p>
+                                        <a class="btn btn-primary" href="/posts/{{ $post->id }}">Read more →</a>
                                     </div>
-                                </a>
-                                <div class="card-body">
-                                    <div class="small text-muted">Posted on {{ $post->created_at->format('F j, Y') }} by {{ $post->user->name }}</div>
-                                    <h2 class="card-title h4">{{ $post->title }}</h2>
-                                    <p class="card-text" style="text-indent: 1.5em; text-align: justify;">{{ Str::limit($post->content, 100) }} ...</p>
-                                    <a class="btn btn-primary" href="/posts/{{ $post->id }}">Read more →</a>
                                 </div>
                             </div>
+                        @endforeach
+                    @else
+                        <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
+                            <h3 class="text-center" style="width: 100%;">NO POSTS</h3>
                         </div>
-                    @endforeach
-                @else
-                    <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
-                        <h3 class="text-center" style="width: 100%;">NO POSTS</h3>
-                    </div>
-                @endif
-                @auth
-                    <a class="btn btn-primary mt-5 mb-5" href="/posts/create">Create Post</a>
-                @endauth
+                    @endif
+                    @auth
+                        <a class="btn btn-primary mt-5 mb-5" href="/posts/create">Create Post</a>
+                    @endauth
                 </div>
 
             </div>

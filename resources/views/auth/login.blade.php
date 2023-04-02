@@ -16,7 +16,7 @@
                                     <label for="email" class="form-label">Email address</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
                                         id="email" name="email" value="{{ old('email') }}" required>
-                                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
                                     @error('email')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -27,7 +27,7 @@
                                     <label for="password">Password</label>
                                     <input type="password" class="form-control @error('password') is-invalid @enderror"
                                         id="password" name="password" required data-validation="password">
-                                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
                                     @error('password')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -46,14 +46,16 @@
 
                                 <div class="flex items-center justify-end mt-4">
                                     @if (Route::has('password.request'))
-                                        <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                        <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-2"
                                             href="{{ route('password.request') }}">
                                             {{ __('Forgot your password?') }}
                                         </a>
                                     @endif
 
-                                    <button type="submit" class="btn btn-primary">Log in</button>
+                                    &nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-primary ml-2">Log
+                                        in</button>
                                 </div>
+
 
                             </form>
                         </div>

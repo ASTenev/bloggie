@@ -3,26 +3,21 @@
 namespace App\Repositories;
 
 use App\Models\Post;
-use App\Repositories\PostRepository;
 use Illuminate\Database\Eloquent\Collection;
+use App\Repositories\PostRepositoryInterface;
 
-class PostRepositoryEloquent implements PostRepository
+class PostRepositoryEloquent implements PostRepositoryInterface
 {
     public function getAll(): Collection
     {
-        return Post::all();
+        return Post::orderByDesc('publish_date')->get();
     }
 
-    public function getUserPosts(): Collection
+    public function getByField(string $name, string $value): Collection
     {
-        return Post::where('user_id', auth()->user()->id)->get();
+        return Post::where($name, '=', $value)->get();
     }
 
-    public function getById(int $id): ?Post
-    {
-        return Post::find($id);
-    }
-    
     public function create(array $data): Post
     {
         return Post::create($data);

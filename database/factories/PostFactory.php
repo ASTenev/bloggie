@@ -16,7 +16,7 @@ class PostFactory extends Factory
             'title' => $this->faker->sentence,
             'content' => $this->faker->paragraphs(rand(3, 10), true),
             'publish_date' => $this->faker->dateTimeBetween('-1 year', 'now'),
-            'image' => $this->faker->imageUrl(),
+            'image' => null,
             'user_id' => User::factory(),
         ];
     }

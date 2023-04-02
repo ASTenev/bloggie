@@ -51,8 +51,9 @@ class PostController extends Controller
         $post = $this->postService->store($data);
 
         if ($request->hasFile('image')) {
-            $imagePath = $image->storeAs('images', $post->id . '.' . $request->file('image')->getClientOriginalExtension());
-            $data['image'] = $imagePath;
+            $image_file_name = $post->id . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->storeAs('public/images', $image_file_name);
+            $data['image'] = $image_file_name;
             $this->postService->update($post, $data);
         }
 
@@ -77,8 +78,12 @@ class PostController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->storeAs('images', $data['id'] . '.' . $request->file('image')->getClientOriginalExtension());
-            $data['image'] = $imagePath;
+            if ($post->image && Storage::exists('public/images/' . $post->image)) {
+                Storage::delete('public/images/' . $post->image);
+            }
+            $image_file_name = $post->id . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->storeAs('public/images', $image_file_name);
+            $data['image'] = $image_file_name;
         }
 
         $post = $this->postService->update($post, $data);
@@ -92,8 +97,8 @@ class PostController extends Controller
 
         $this->authorize('delete', $post);
 
-        if ($post->image && Storage::exists($post->image)) {
-            Storage::delete($post->image);
+        if ($post->image && Storage::exists('public/images/' . $post->image)) {
+            Storage::delete('public/images/' . $post->image);
         }
 
         $this->postService->destroy($post);

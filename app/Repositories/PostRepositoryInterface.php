@@ -5,13 +5,11 @@ namespace App\Repositories;
 use App\Models\Post;
 use Illuminate\Support\Collection;
 
-interface PostRepository
+interface PostRepositoryInterface
 {
     public function getAll(): Collection;
 
-    public function getUserPosts(): Collection;
-
-    public function getById(int $id): ?Post;
+    public function getByField(string $name, string $value): Collection;
 
     public function create(array $data): Post;
 

@@ -19,10 +19,13 @@
                                     </header>
                                     <!-- Preview image figure-->
                                     @php
-                                        $image = $post->image ? asset('storage/' . $post->image) : 'https://dummyimage.com/900x400/ced4da/6c757d.jpg';
+                                        $image = $post->image ? asset('storage/images/' . $post->image) : url('storage/images/default.jpg');
                                     @endphp
-                                    <figure class="mb-4"><img class="img-fluid rounded" src="{{ $image }}"
-                                            alt="..." /></figure>
+                                    <figure class="mb-4 text-center">
+                                        <img class="img-fluid rounded d-block mx-auto" src="{{ $image }}"
+                                            alt="..."
+                                            style="max-height:500px; max-width: auto; object-fit: cover;" />
+                                    </figure>
                                     <!-- Post content-->
                                     <section class="mb-5">
                                         <p class="fs-5 mb-4 text-justify!"
@@ -31,7 +34,7 @@
                                     </section>
                                 </article>
                             @endif
-                            @if (session('user') && session('user')->id == $post->user_id)
+                            @if (auth()->check() && auth()->user()->id == $post->user_id)
                                 <div class="btn-group">
                                     <a class="btn btn-primary" href="/posts/{{ $post->id }}/edit">Edit Post</a>
                                     <form method="POST" action="/posts/{{ $post->id }}">
