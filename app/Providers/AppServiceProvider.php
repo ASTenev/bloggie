@@ -6,6 +6,7 @@ use App\Services\PostService;
 use App\Http\Requests\PostRequest;
 use App\Repositories\PostRepository;
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\LikeRepositoryEloquent;
 use App\Repositories\PostRepositoryEloquent;
 use App\Repositories\CategoryRepositoryEloquent;
 
@@ -18,8 +19,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(PostRepository::class, PostRepositoryEloquent::class);
         $this->app->bind(CategoryRepository::class, CategoryRepositoryEloquent::class);
+        $this->app->bind(LikeRepository::class, LikeRepositoryEloquent::class);
         $this->app->bind(PostService::class, function ($app) {
-            return new PostService($app->make(PostRepository::class), $app->make(CategoryRepository::class));
+            return new PostService($app->make(PostRepository::class), $app->make(CategoryRepository::class), $app->make(LikeRepository::class));
         });
 
         $this->app->bind(PostRequest::class, function ($app) {

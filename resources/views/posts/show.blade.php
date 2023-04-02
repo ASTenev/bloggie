@@ -12,10 +12,33 @@
                                     <header class="mb-4">
                                         <!-- Post title-->
                                         <h1 class="fw-bolder mb-1">{{ $post->title }}</h1>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="text-muted fst-italic mb-2">
+                                                Posted on {{ date('F j, Y', strtotime($post->created_at)) }} by
+                                                {{ $post->user->name }}
+                                            </div>
+                                            <div>
+                                                <div id="like-button" class="border-0 bg-transparent p-0"
+                                                    data-post-id="{{ $post->id }}"
+                                                    data-liked="{{ $post->is_liked ? 'true' : 'false' }}"
+                                                    @auth()
+                                                        onmouseover="this.style.cursor='pointer'"
+                                                        onmouseout="this.style.cursor='default'"
+                                                    @endauth
+                                                    >
+                                                    <span id="likes-count">{{ $post->likes_count }}</span>
+                                                    <span class="material-icons text-primary cursor-pointer"
+                                                        id="like-icon">
+                                                        @if ($post->is_liked)
+                                                            favorite
+                                                        @else
+                                                            favorite_border
+                                                        @endif
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <!-- Post meta content-->
-                                        <div class="text-muted fst-italic mb-2">Posted on
-                                            {{ date('F j, Y', strtotime($post->created_at)) }} by
-                                            {{ $post->user->name }}</div>
                                     </header>
                                     <!-- Preview image figure-->
                                     @php
@@ -50,4 +73,47 @@
             </div>
         </div>
     </div>
+@auth
+<script>
+        const likeButton = document.getElementById('like-button');
+        if (likeButton) {
+            likeButton.addEventListener('click', function() {
+                const postId = likeButton.dataset.postId;
+                const isLiked = (likeButton.dataset.liked === 'true');
+
+                if (isLiked) {
+                    // Unlike the post
+                    fetch(`/posts/${postId}/unlike`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            }
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                likeButton.dataset.liked = 'false';
+                                document.getElementById('like-icon').innerHTML = 'favorite_border';
+                                document.getElementById('likes-count').innerHTML--;
+                            }
+                        });
+                } else {
+                    // Like the post
+                    fetch(`/posts/${postId}/like`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            }
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                likeButton.dataset.liked = 'true';
+                                document.getElementById('like-icon').innerHTML = 'favorite';
+                                document.getElementById('likes-count').innerHTML++;
+                            }
+                        });
+                }
+            });
+        }
+    </script>
+    @endauth
 </x-app-layout>

@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PostFactory extends Factory
@@ -18,6 +19,7 @@ class PostFactory extends Factory
             'publish_date' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'image' => null,
             'user_id' => User::factory(),
+            'category_id' => Category::inRandomOrder()->first()->id,
         ];
     }
 }

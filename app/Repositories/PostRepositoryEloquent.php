@@ -24,9 +24,9 @@ class PostRepositoryEloquent implements PostRepositoryInterface
         return Post::create($data);
     }
 
-    public function update(Post $post, array $data): Post
+    public function update(int $id, array $data): Post
     {
-        $post->update($data);
+        $post = Post::updateOrCreate(['id' => $id], $data);
         return $post;
     }
 

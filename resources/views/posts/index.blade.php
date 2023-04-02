@@ -57,8 +57,29 @@
                                         </div>
                                     </a>
                                     <div class="card-body">
-                                        <div class="small text-muted">Posted on
-                                            {{ $post->created_at->format('F j, Y') }} by {{ $post->user->name }}</div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="text-muted fst-italic mb-2">
+                                                Posted on {{ date('F j, Y', strtotime($post->created_at)) }} by
+                                                {{ $post->user->name }}
+                                            </div>
+                                            <div>
+                                                <div id="like-button-{{ $post->id }}"
+                                                    class="border-0 bg-transparent p-0 d-flex"
+                                                    data-post-id="{{ $post->id }}"
+                                                    data-liked="{{ $post->is_liked ? 'true' : 'false' }}">
+                                                    <span id="likes-count-{{ $post->id }}"
+                                                        class="mr-2">{{ $post->likes_count }}</span>
+                                                    <span class="material-icons text-primary cursor-pointer"
+                                                        id="like-icon-{{ $post->id }}">
+                                                        @if ($post->is_liked)
+                                                            favorite
+                                                        @else
+                                                            favorite_border
+                                                        @endif
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <h2 class="card-title h4">{{ $post->title }}</h2>
                                         <p class="card-text" style="text-indent: 1.5em; text-align: justify;">
                                             {{ Str::limit($post->content, 100) }} ...</p>

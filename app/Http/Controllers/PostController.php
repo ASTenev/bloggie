@@ -33,6 +33,14 @@ class PostController extends Controller
         return view('posts.index', compact('posts', 'query', 'categories'));
     }
 
+    public function postsByCategory($id)
+    {
+        $posts = $this->postService->getByCategory($id);
+        $categories = $this->postService->getCategories();
+        $selected = $id;
+        return view('posts.index', compact('posts', 'categories', 'selected'));
+    }
+
     public function userPosts()
     {
         $posts = $this->postService->getByUser();
@@ -99,10 +107,10 @@ class PostController extends Controller
             $data['image'] = $image_file_name;
         }
 
-        $post = $this->postService->update($post, $data);
+        $this->postService->update($id, $data);
 
         $categories = $this->postService->getCategories();
-        return redirect()->route('posts.show', [$post->id, 'categories' => $categories]);
+        return redirect()->route('posts.show', [$id, 'categories' => $categories]);
     }
 
     public function destroy($id)
@@ -120,10 +128,29 @@ class PostController extends Controller
         return redirect()->route('posts.index');
     }
 
-    public function postsByCategory($id)
+    public function like($id)
     {
-        $posts = $this->postService->getByCategory($id);
-        $categories = $this->postService->getCategories();
-        return view('posts.index', compact('posts', 'categories'));
+        $post = $this->postService->show($id);
+        $this->postService->like($post);
+        $likes_count = $this->postService->getLikesCount($id);
+        $is_liked = $this->postService->isLiked($id);
+
+        return response()->json([
+            'is_liked' => $is_liked,
+            'likes_count' => $likes_count,
+        ]);
+    }
+
+    public function unlike($id)
+    {
+        $post = $this->postService->show($id);
+        $this->postService->unlike($post);
+        $likes_count = $this->postService->getLikesCount($id);
+        $is_liked = $this->postService->isLiked($id);
+
+        return response()->json([
+            'is_liked' => $is_liked,
+            'likes_count' => $likes_count,
+        ]);
     }
 }
