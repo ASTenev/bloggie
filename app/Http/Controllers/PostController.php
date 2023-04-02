@@ -21,20 +21,23 @@ class PostController extends Controller
     public function index()
     {
         $posts = $this->postService->index();
-        return view('posts.index', compact('posts'));
+        $categories = $this->postService->getCategories();
+        return view('posts.index', compact('posts', 'categories'));
     }
 
     public function search(SearchRequest $request)
     {
         $query = $request->input('query');
         $posts = $this->postService->search($query);
-        return view('posts.index', compact('posts', 'query'));
+        $categories = $this->postService->getCategories();
+        return view('posts.index', compact('posts', 'query', 'categories'));
     }
 
     public function userPosts()
     {
-        $posts = $this->postService->UserPosts();
-        return view('posts.index', compact('posts'));
+        $posts = $this->postService->getByUser();
+        $categories = $this->postService->getCategories();
+        return view('posts.index', compact('posts', 'categories'));
     }
 
     public function show($id)
@@ -45,7 +48,8 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        $categories = $this->postService->getCategories();
+        return view('posts.create', compact('categories'));
     }
 
     public function store(PostRequest $request)
@@ -65,7 +69,8 @@ class PostController extends Controller
             $this->postService->update($post, $data);
         }
 
-        return redirect()->route('posts.show', $post->id);
+        $categories = $this->postService->getCategories();
+        return redirect()->route('posts.show', [$post->id, 'categories' => $categories]);
     }
 
     public function edit($id)
@@ -73,8 +78,8 @@ class PostController extends Controller
         $post = $this->postService->show($id);
 
         $this->authorize('edit', $post);
-
-        return view('posts.edit', compact('post'));
+        $categories = $this->postService->getCategories();
+        return view('posts.edit', compact('post', 'categories'));
     }
 
     public function update(PostRequest $request, $id)
@@ -96,7 +101,8 @@ class PostController extends Controller
 
         $post = $this->postService->update($post, $data);
 
-        return redirect()->route('posts.show', $post->id);
+        $categories = $this->postService->getCategories();
+        return redirect()->route('posts.show', [$post->id, 'categories' => $categories]);
     }
 
     public function destroy($id)
@@ -112,5 +118,12 @@ class PostController extends Controller
         $this->postService->destroy($post);
 
         return redirect()->route('posts.index');
+    }
+
+    public function postsByCategory($id)
+    {
+        $posts = $this->postService->getByCategory($id);
+        $categories = $this->postService->getCategories();
+        return view('posts.index', compact('posts', 'categories'));
     }
 }

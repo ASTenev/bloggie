@@ -14,7 +14,8 @@ class Post extends Model
         'content',
         'publish_date',
         'image',
-        'user_id'
+        'user_id',
+        'category_id'
     ];
 
     protected $dates = [

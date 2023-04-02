@@ -25,6 +25,7 @@ Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.e
 Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update')->where('post', '[0-9]+')->middleware('auth');
 Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy')->where('post', '[0-9]+')->middleware('auth');
 Route::get('/posts/search/', [PostController::class, 'search'])->name('posts.search');
+Route::get('/posts/categories/{category}', [PostController::class, 'postsByCategory'])->name('posts.category.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
