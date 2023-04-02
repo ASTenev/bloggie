@@ -14,9 +14,9 @@ class PostRepositoryEloquent implements PostRepositoryInterface
         return Post::orderByDesc('publish_date')->paginate(10);
     }
 
-    public function getByField(string $name, string $value): LengthAwarePaginator
+    public function getByField(string $name, string $operation, string $value): LengthAwarePaginator
     {
-        return Post::where($name, '=', $value)->paginate(10);
+        return Post::where($name, $operation, $value)->paginate(10);
     }
 
     public function create(array $data): Post

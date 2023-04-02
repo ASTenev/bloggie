@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
+use App\Http\Requests\SearchRequest;
 use App\Models\Post;
 use App\Services\PostService;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +22,13 @@ class PostController extends Controller
     {
         $posts = $this->postService->index();
         return view('posts.index', compact('posts'));
+    }
+
+    public function search(SearchRequest $request)
+    {
+        $query = $request->input('query');
+        $posts = $this->postService->search($query);
+        return view('posts.index', compact('posts', 'query'));
     }
 
     public function userPosts()

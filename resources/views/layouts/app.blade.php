@@ -12,11 +12,11 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!-- Scripts -->
-        @vite(['resources/css/style.css', 'resources/js/app.js'])
+        @vite(['resources/css/bootstrap.css', 'resources/js/app.js', 'resources/js/bootstrap.js'])
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+            @include('components.navigation')
 
             <!-- Page Heading -->
             @if (isset($header))

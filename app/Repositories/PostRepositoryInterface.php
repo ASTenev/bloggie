@@ -10,7 +10,7 @@ interface PostRepositoryInterface
 {
     public function getAll(): LengthAwarePaginator;
 
-    public function getByField(string $name, string $value): LengthAwarePaginator;
+    public function getByField(string $name, string $operation, string $value): LengthAwarePaginator;
 
     public function create(array $data): Post;
 

@@ -22,14 +22,19 @@ class PostService
         return $this->postRepository->getAll();
     }
 
+    public function search (string $search): LengthAwarePaginator
+    {
+        return $this->postRepository->getByField('title', 'LIKE', "%$search%");
+    }
+
     public function userPosts(): LengthAwarePaginator
     {
-        return $this->postRepository->getByField('user_id', Auth::id());
+        return $this->postRepository->getByField('user_id', '=', Auth::id());
     }
 
     public function show(int $id): ?Post
     {
-        return $this->postRepository->getByField('id', $id)->first();
+        return $this->postRepository->getByField('id', '=', $id)->first();
     }
 
     public function store(array $data): Post
