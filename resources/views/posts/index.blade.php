@@ -49,7 +49,7 @@
                                         @if ($post->image)
                                             @php $image = url('storage/images/' . $post->image) @endphp
                                         @else
-                                            @php $image = url('storage/images/default.jpg') @endphp
+                                            @php $image = url('images/default.jpg') @endphp
                                         @endif
                                         <div class="image-container" style="width: auto;">
                                             <img src="{{ $image }}" alt="Post image" class="mx-auto d-block"
