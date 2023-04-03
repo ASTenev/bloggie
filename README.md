@@ -17,5 +17,8 @@ git clone https://github.com/ASTenev/bloggie
 
 5.Run database migration with the folowing command:
     php artisan migrate
+    
+6. You can seed database with some date if you want:
+    php artisan db:seed
 
 6.Open in browser and enjoy!
