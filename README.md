@@ -1,4 +1,3 @@
-```
 # Bloggie App with Laravel 10
 
 This is a mini blog app that allows users to register, log in, create posts, and delete posts. The app requires min PHP 8 and MySQL 8.
@@ -28,4 +27,3 @@ To install the app, follow these steps:
    ```
 
 5. Open in browser and enjoy!
-```
