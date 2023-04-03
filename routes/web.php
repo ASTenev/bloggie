@@ -39,5 +39,6 @@ Route::middleware('auth')->group(function () {
 Route::view('/about', 'about')->name('about');
 Route::view('/contact', 'contact')->name('contact');
 
+Route::post('/contact', [App\Http\Controllers\ContactController::class, 'sendEmail']);
 
 require __DIR__.'/auth.php';

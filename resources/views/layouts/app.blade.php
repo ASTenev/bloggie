@@ -13,9 +13,21 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!-- Scripts -->
         @vite(['resources/css/bootstrap.css', 'resources/js/app.js'])
+
+        <style>
+            body {
+                min-height: 100vh !important;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .content {
+                flex: 1;
+            }
+        </style>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="content min-h-screen bg-gray-100">
             @include('components.navigation')
 
             <!-- Page Heading -->
@@ -32,6 +44,8 @@
                 {{ $slot }}
             </main>
         </div>
-        @include('components.footer')
+        <div class="footer">
+            @include('components.footer')
+        </div>
     </body>
 </html>

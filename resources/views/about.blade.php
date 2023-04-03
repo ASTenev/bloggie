@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container-fluid mt-5">
+    <div class="container-fluid mt-5 py-5">
         <div class="row justify-content-center">
             <div class="col-md-9 col-lg-6">
                 <div class="row">
