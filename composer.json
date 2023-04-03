@@ -50,7 +50,8 @@
         ],
         "post-install-cmd": [
             "@php artisan migrate --force",
-            "@php artisan key:generate"
+            "@php artisan key:generate",
+            "@php artisan storage:link"
         ]
     },
     "extra": {
