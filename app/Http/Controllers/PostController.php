@@ -72,7 +72,7 @@ class PostController extends Controller
 
         if ($request->hasFile('image')) {
             $image_file_name = $post->id . '.' . $request->file('image')->getClientOriginalExtension();
-            $request->file('image')->storeAs('public/images', $image_file_name);
+            $request->file('image')->storeAs('public', $image_file_name);
             $data['image'] = $image_file_name;
             $this->postService->update($post->id, $data);
         }
@@ -99,11 +99,11 @@ class PostController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
-            if ($post->image && Storage::exists('public/images/' . $post->image)) {
-                Storage::delete('public/images/' . $post->image);
+            if ($post->image && Storage::exists('public/' . $post->image)) {
+                Storage::delete('public/' . $post->image);
             }
             $image_file_name = $post->id . '.' . $request->file('image')->getClientOriginalExtension();
-            $request->file('image')->storeAs('public/images', $image_file_name);
+            $request->file('image')->storeAs('public', $image_file_name);
             $data['image'] = $image_file_name;
         }
 
@@ -119,8 +119,8 @@ class PostController extends Controller
 
         $this->authorize('delete', $post);
 
-        if ($post->image && Storage::exists('public/images/' . $post->image)) {
-            Storage::delete('public/images/' . $post->image);
+        if ($post->image && Storage::exists('public/' . $post->image)) {
+            Storage::delete('public/' . $post->image);
         }
 
         $this->postService->destroy($post);

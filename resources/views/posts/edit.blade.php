@@ -46,7 +46,7 @@
 
                                 <div class="mb-3">
                                     @if ($post->image)
-                                        <img src="{{ asset('storage/images/' . $post->image) }}" alt="Current image"
+                                        <img src="{{ asset('storage/' . $post->image) }}" alt="Current image"
                                             style="max-width:800px;max-height:200px">
                                         <input type='hidden' name="old_image" value="{{ $post->image }}">
                                     @endif

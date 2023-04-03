@@ -42,7 +42,7 @@
                                     </header>
                                     <!-- Preview image figure-->
                                     @php
-                                        $image = $post->image ? asset('storage/images/' . $post->image) : url('images/default.jpg');
+                                        $image = $post->image ? asset('storage/' . $post->image) : url('images/default.jpg');
                                     @endphp
                                     <figure class="mb-4 text-center">
                                         <img class="img-fluid rounded d-block mx-auto" src="{{ $image }}"

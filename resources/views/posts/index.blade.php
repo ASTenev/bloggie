@@ -47,7 +47,7 @@
                                 <div class="card" style="min-height:100%;"">
                                     <a href="/posts/{{ $post->id }}">
                                         @if ($post->image)
-                                            @php $image = url('storage/images/' . $post->image) @endphp
+                                            @php $image = url('storage/' . $post->image) @endphp
                                         @else
                                             @php $image = url('images/default.jpg') @endphp
                                         @endif
