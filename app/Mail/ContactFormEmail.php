@@ -21,6 +21,6 @@ class ContactFormEmail extends Mailable
     {
         return $this->from($this->data['email'], $this->data['name'])
                     ->subject('New Contact Form Submission')
-                    ->view('emails.contact', ['data' => $this->data]);
+                    ->view('contact', ['data' => $this->data]);
     }
 }
