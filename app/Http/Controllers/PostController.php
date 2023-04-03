@@ -74,7 +74,7 @@ class PostController extends Controller
             $image_file_name = $post->id . '.' . $request->file('image')->getClientOriginalExtension();
             $request->file('image')->storeAs('public/images', $image_file_name);
             $data['image'] = $image_file_name;
-            $this->postService->update($post, $data);
+            $this->postService->update($post->id, $data);
         }
 
         $categories = $this->postService->getCategories();

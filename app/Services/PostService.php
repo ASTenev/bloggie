@@ -27,31 +27,31 @@ class PostService
     public function index(): LengthAwarePaginator
     {
         $posts = $this->postRepository->getAll();
-        return $this->addLikes($posts);
+        return $this->addIsLiked($posts);
     }
 
     public function search(string $search): LengthAwarePaginator
     {
         $posts = $this->postRepository->getByField('title', 'LIKE', "%$search%");
-        return $this->addLikes($posts);
+        return $this->addIsLiked($posts);
     }
 
     public function getByUser(): LengthAwarePaginator
     {
         $posts = $this->postRepository->getByField('user_id', '=', Auth::id());
-        return $this->addLikes($posts);
+        return $this->addIsLiked($posts);
     }
 
      public function getByCategory(int $id): LengthAwarePaginator
     {
         $posts = $this->postRepository->getByField('category_id', '=', $id);
-        return $this->addLikes($posts);
+        return $this->addIsLiked($posts);
     }
 
     public function show(int $id): ?Post
     {
         $posts = $this->postRepository->getByField('id', '=', $id);
-        return $this->addLikes($posts)->first();
+        return $this->addIsLiked($posts)->first();
     }
 
     public function store(array $data): Post
@@ -98,10 +98,9 @@ class PostService
         return $this->likeRepository->isLiked($id, Auth::id());
     }
 
-    public function addLikes($posts)
+    public function addIsLiked($posts)
     {
         foreach ($posts as &$post) {
-            $post['likes_count'] = $this->getLikesCount($post->id);
             if(Auth::check())
                 $post['is_liked'] = $this->isLiked($post->id);
         }

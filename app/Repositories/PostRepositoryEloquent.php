@@ -11,12 +11,13 @@ class PostRepositoryEloquent implements PostRepositoryInterface
 {
     public function getAll(): LengthAwarePaginator
     {
-        return Post::orderByDesc('publish_date')->paginate(10);
+        return Post::withCount('likes')->orderByDesc('publish_date')->paginate(10);
+        
     }
 
     public function getByField(string $name, string $operation, string $value): LengthAwarePaginator
     {
-        return Post::where($name, $operation, $value)->paginate(10);
+        return Post::withCount('likes')->where($name, $operation, $value)->orderByDesc('publish_date')->paginate(10);
     }
 
     public function create(array $data): Post
@@ -35,3 +36,4 @@ class PostRepositoryEloquent implements PostRepositoryInterface
         $post->delete();
     }
 }
+

@@ -31,4 +31,9 @@ class Post extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
 }
