@@ -50,8 +50,7 @@
         ],
         "post-install-cmd": [
             "@php artisan migrate --force",
-            "@php artisan key:generate",
-            "md storage\\app\\public\\images"
+            "@php artisan key:generate"
         ]
     },
     "extra": {
